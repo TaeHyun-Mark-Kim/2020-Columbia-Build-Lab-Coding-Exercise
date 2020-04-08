@@ -51,6 +51,16 @@ def increase_score():
         if team["id"] == team_id:
             team["score"] += 1
 
+
+    # Used a basic sorting algorithm. This can be made faster if the need arises.
+
+    for i in range(len(scoreboard)):
+        for j in range(i,len(scoreboard)):
+            if(scoreboard[i]['score']<scoreboard[j]['score']):
+                temp = scoreboard[i]
+                scoreboard[i] = scoreboard[j]
+                scoreboard[j] = temp
+
     return jsonify(scoreboard=scoreboard)
 
 
