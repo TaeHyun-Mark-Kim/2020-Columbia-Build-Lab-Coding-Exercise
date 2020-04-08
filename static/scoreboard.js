@@ -32,6 +32,7 @@ function increase_score(id){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
     success: function(result){
+        // Called the display_scoreboard function with the updated scoreboard data
         display_scoreboard(result['scoreboard']);
     },
     error: function(request, status, error){
