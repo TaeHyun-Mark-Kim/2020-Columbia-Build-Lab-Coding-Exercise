@@ -15,6 +15,7 @@ function addTeamView(id, name, score){
     increase_score(id);
   });
   name_template.text(name);
+  console.log("The score is " + score)
   score_template.text(score);
   button_template.append(increase_button);
   team_template.append(name_template);
@@ -32,7 +33,10 @@ function increase_score(id){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
     success: function(result){
-        
+      // re-display the scoreboard 
+      var updated_scoreboard = result["scoreboard"]
+      scoreboard = updated_scoreboard
+      display_scoreboard(scoreboard)
     },
     error: function(request, status, error){
         console.log("Error");
