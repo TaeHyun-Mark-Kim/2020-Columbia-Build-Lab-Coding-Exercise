@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, redirect, url_for
 from flask import Response, request, jsonify
 app = Flask(__name__)
 
@@ -38,20 +38,21 @@ scoreboard = [
 
 @app.route('/')
 def show_scoreboard():
-    return render_template('scoreboard.html', scoreboard = scoreboard) 
+    return render_template('scoreboard.html', scoreboard = scoreboard)
 
-@app.route('/increase_score', methods=['GET', 'POST'])
-def increase_score():
+@app.route('/sort_score', methods=['GET', 'POST'])
+def sort_scoreboard():
     global scoreboard
 
-    json_data = request.get_json()   
-    team_id = json_data["id"]  
-    
+    team_id = request.get_json()
     for team in scoreboard:
-        if team["id"] == team_id:
+        if int(team["id"]) == int(team_id):
             team["score"] += 1
 
-    return jsonify(scoreboard=scoreboard)
+    new_scoreboard = sorted(scoreboard, key = lambda i: i['score'], reverse = True)
+    scoreboard = new_scoreboard
+
+    return redirect(url_for('show_scoreboard'))
 
 
 if __name__ == '__main__':
