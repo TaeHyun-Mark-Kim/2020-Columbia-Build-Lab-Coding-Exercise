@@ -1,13 +1,12 @@
 <html>
   <head>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename = 'scoreboard.js') }}"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <script>
-      var scoreboard = {{scoreboard|tojson}} 
-    </script>
+
    <style>
      #title{
        font-size: 30px;
@@ -34,8 +33,40 @@
       </div>
       <div class="contents">
           <div id="teams">
+            {% for team in scoreboard %}
+                <div class = col-md-5> {{team['name']}} </div>
+                <div id = {{team['id']}} class = col-md-2> {{team['score']}} </div>
+                <script>
 
+                  function buttonClick(score, id) {
+                      id = parseInt(id)
+                      score = parseInt(score)
+                      document.getElementById(id).innerHTML = score + 1;
+
+                  $.ajax({
+                    type: "POST",
+                    url: "sort_score",
+                    dataType : "json",
+                    contentType: "application/json; charset=utf-8",
+                    data : JSON.stringify(id.toString()),
+                    success: function(result){
+
+                    },
+                    error: function(request, status, error){
+                        console.log("Error");
+                        console.log(request)
+                        console.log(status)
+                        console.log(error)
+                    }
+                });
+                location.reload()
+                }
+               </script>
+                <button onclick="buttonClick({{team['score']}}, {{team['id']}});" id = 'increase' class = increase-button>+</button>
+
+            {% endfor %}
           </div>
+
       </div>
     </div>
   </body>
