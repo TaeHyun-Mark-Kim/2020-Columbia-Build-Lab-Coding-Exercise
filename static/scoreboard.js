@@ -3,6 +3,7 @@ function display_scoreboard(scoreboard){
   $.each(scoreboard, function(index, team){
     addTeamView(team.id, team.name, team.score);
   });
+  scoreboard.sort(scoreboard.score)
 }
 
 function addTeamView(id, name, score){
@@ -32,7 +33,8 @@ function increase_score(id){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
     success: function(result){
-        
+      var update_score = result["scoreboard"]
+      display_scoreboard(update_score)
     },
     error: function(request, status, error){
         console.log("Error");
