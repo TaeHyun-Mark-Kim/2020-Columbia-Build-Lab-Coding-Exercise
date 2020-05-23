@@ -34,8 +34,6 @@ function increase_score(id){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
     success: function(result){
-        console.log("Enter Success Bracket")
-        console.log(result)
         scoreResult = result['scoreboard']
         display_scoreboard(scoreResult)
     },
