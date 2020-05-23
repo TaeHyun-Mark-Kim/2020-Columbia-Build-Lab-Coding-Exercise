@@ -1,4 +1,4 @@
-function display_scoreboard(scoreboard){
+function display_scoreboard(scoreboard){ 
   $("#teams").empty();
   $.each(scoreboard, function(index, team){
     addTeamView(team.id, team.name, team.score);
@@ -25,6 +25,7 @@ var div_id = id + "-score";
   $("#teams").append(team_template);
 }
 
+
 function increase_score(id){
   var team_id = {"id": id}
   $.ajax({
@@ -34,26 +35,21 @@ function increase_score(id){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
     success: function(result){
-      //console.log(scoreboard[0]);
-      //var score = 0;
-      //for (var i = 0; i < scoreboard.length; i++) {
-      //  console.log(scoreboard[i]);
-      //  if(scoreboard[i].id == team_id){
-      //    score = sccoreboard[i].score;
-      //  }
-      //}
 
-      //console.log(score);
-      //var score = result[].score;
-      //console.log(result);
-      //console.log(result.score)
-      //var jQueryXml = $(result);
-      //console.log(jQueryXml);
-      //var textElement = jQueryXml.find("score");
-      //console.log(textElement);
-      var score = result.score;
-      console.log('#' + result.id + '-score' + '.col-md-2');
-      $('#' + result.id + '-score' + '.col-md-2').html(score);
+      var score = 0;
+      for (var i = 0; i < result.scoreboard.length; i++) {
+        if(result.scoreboard[i].id == id){
+          score = result.scoreboard[i].score;
+        }
+      }
+
+      $('#' + id + '-score' + '.col-md-2').html(score);
+
+      result.scoreboard.sort(function(a, b) {
+        return parseFloat(b.score) - parseFloat(a.score);
+      });
+
+      display_scoreboard(result.scoreboard);
       
     },
     error: function(request, status, error){
@@ -63,8 +59,9 @@ function increase_score(id){
         console.log(error)
     }
   });
-  //return +score+1;
+ 
 }
+
 
 $(document).ready(function(){
   display_scoreboard(scoreboard);
