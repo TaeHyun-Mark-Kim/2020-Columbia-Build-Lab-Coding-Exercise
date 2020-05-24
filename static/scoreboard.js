@@ -1,5 +1,10 @@
 function display_scoreboard(scoreboard){
   $("#teams").empty();
+
+  //Sort the scoreboard variable by team score, which is a list of json
+  scoreboard.sort(function(team_a, team_b) {
+    return (team_a['score'] > team_b['score']) ? -1 : ((team_a['score'] < team_b['score']) ? 1 : 0)
+  })
   $.each(scoreboard, function(index, team){
     addTeamView(team.id, team.name, team.score);
   });
@@ -31,8 +36,11 @@ function increase_score(id){
     dataType : "json",
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
+    //upon successfully increasing score on the server side, we
+    //refresh the contents by calling display_scoreboard again
     success: function(result){
         
+        window.location.href = './'
     },
     error: function(request, status, error){
         console.log("Error");
