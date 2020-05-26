@@ -34,7 +34,7 @@ function increase_score(id){
     data : JSON.stringify(team_id),
     success: function(result){
       
-      $scoreboard = result['scoreboard'];
+      var $scoreboard = result['scoreboard'];
       console.log($scoreboard);
       display_scoreboard($scoreboard);
 
