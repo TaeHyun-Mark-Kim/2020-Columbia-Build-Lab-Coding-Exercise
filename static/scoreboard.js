@@ -36,7 +36,7 @@ function increase_score(id){
       
       $scoreboard = result['scoreboard'];
       console.log($scoreboard);
-      display_scoreboard($scoreboard)
+      display_scoreboard($scoreboard);
 
     },
     error: function(request, status, error){
