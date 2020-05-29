@@ -54,7 +54,6 @@ def increase_score():
     # determine ID of the team to increase score
     team_id = json_data["id"]  
 
-    prev_score = 0
     i = 0
 
     while True:
@@ -63,16 +62,20 @@ def increase_score():
         if scoreboard[i]["id"] == team_id:
             scoreboard[i]["score"] += 1
             new_score = scoreboard[i]["score"]
-        
-            if ((i>0) and (new_score > prev_score)):
-                # swap the positions of the two teams in the list
-                temp_team = scoreboard[i].copy()
-                scoreboard[i] = scoreboard[i-1].copy()
-                scoreboard[i-1] = temp_team.copy()
+            
+            j = i
+            while True:
+                if ((j>0) and (new_score > scoreboard[j-1]["score"])):
+                    # swap the positions of the two teams in the list
+                    temp_team = scoreboard[j].copy()
+                    scoreboard[j] = scoreboard[j-1].copy()
+                    scoreboard[j-1] = temp_team.copy()
+                    j-=1
+                else:
+                    break
 
             break
         else:
-            prev_score = scoreboard[i]["score"]
             i+=1
 
     # return the scoreboard as JSON
