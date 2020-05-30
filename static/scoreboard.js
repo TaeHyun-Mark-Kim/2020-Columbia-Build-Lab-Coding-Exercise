@@ -12,7 +12,15 @@ function addTeamView(id, name, score){
   var button_template = $("<div class = col-md-2></div>");
   var increase_button = $("<button class = increase-button>+</button>");
   $(increase_button).click(function(){
+    console.log("Buttom clicked")
     increase_score(id);
+    // $("#teams").empty();
+    // $.each(scoreboard, function (index, team) {
+    //   addTeamView(team.id, team.name, team.score);
+    // });
+
+    // console.log("This is the scoreboard:", scoreboard)
+    
   });
   name_template.text(name);
   score_template.text(score);
@@ -32,7 +40,15 @@ function increase_score(id){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
     success: function(result){
-        
+      console.log("Success has happened?")
+      console.log("The Result")
+      // console.log(result)
+      console.log(result["scoreboard"])
+      // scoreboard=result
+      // console.log("The new sb:")
+      // console.log(scoreboard)
+      display_scoreboard(result["scoreboard"])
+
     },
     error: function(request, status, error){
         console.log("Error");
@@ -41,6 +57,8 @@ function increase_score(id){
         console.log(error)
     }
   });
+  console.log("Success has happened?-1")
+
 }
 
 $(document).ready(function(){
