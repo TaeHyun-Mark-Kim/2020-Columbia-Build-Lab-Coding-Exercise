@@ -50,9 +50,15 @@ def increase_score():
     for team in scoreboard:
         if team["id"] == team_id:
             team["score"] += 1
-
+    scoreboard.sort( key=nonincreasing_score, reverse=True )
     return jsonify(scoreboard=scoreboard)
 
+#return key to compare scoreboard json entries when sorting
+def nonincreasing_score(sbjson):
+    try:
+        return int(sbjson['score'])
+    except KeyError:
+        return 0
 
 if __name__ == '__main__':
    app.run(debug = True)
