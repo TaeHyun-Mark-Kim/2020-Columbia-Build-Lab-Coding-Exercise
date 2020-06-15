@@ -3,6 +3,7 @@ function display_scoreboard(scoreboard){
   $.each(scoreboard, function(index, team){
     addTeamView(team.id, team.name, team.score);
   });
+
 }
 
 function addTeamView(id, name, score){
@@ -32,6 +33,8 @@ function increase_score(id){
     contentType: "application/json; charset=utf-8",
     data : JSON.stringify(team_id),
     success: function(result){
+
+      window.location.href = "/"; 
         
     },
     error: function(request, status, error){
@@ -46,3 +49,4 @@ function increase_score(id){
 $(document).ready(function(){
   display_scoreboard(scoreboard);
 })
+
